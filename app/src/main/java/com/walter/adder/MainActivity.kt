@@ -1,5 +1,6 @@
 package com.walter.adder
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -29,7 +30,6 @@ import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.OutlinedTextField
-import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -41,7 +41,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.hapticfeedback.HapticFeedbackType
-import androidx.compose.ui.input.key.Key
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalHapticFeedback
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
@@ -75,6 +75,11 @@ fun AdvancedCalculator() {
     var expanded by remember { mutableStateOf(false) }
 
     val haptic = LocalHapticFeedback.current
+
+    val context = LocalContext.current
+
+    Spacer(modifier = Modifier.height(24.dp))
+
 
 
     val resultAlpha by animateFloatAsState(
@@ -171,6 +176,17 @@ fun AdvancedCalculator() {
                     modifier = Modifier.fillMaxWidth()
                 ) {
                     Text("Calculate", color = Color.White, fontSize = 18.sp)
+                }
+
+                Button(
+                    onClick = {
+                        context.startActivity(Intent(context, SecondActivity::class.java))
+                    },
+                    colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF009688)),
+                    shape = RoundedCornerShape(12.dp),
+                    modifier = Modifier.fillMaxWidth()
+                ) {
+                    Text("Go to Second Activity", color = Color.White, fontSize = 16.sp)
                 }
 
                 if (result != null){
